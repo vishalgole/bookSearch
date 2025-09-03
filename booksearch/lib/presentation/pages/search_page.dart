@@ -1,6 +1,7 @@
 import 'package:booksearch/core/strings/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../bloc/book_bloc.dart';
 import '../../data/models/book_model.dart';
@@ -29,7 +30,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Book Finder"),
+        title: Center(child: const Text(Strings.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
       ),
       body: Column(
         children: [
@@ -45,12 +46,26 @@ class _SearchPageState extends State<SearchPage> {
               },
               builder: (context, state) {
                 if (state is BookInitial) {
-                  return const Center(child: Text("Search for a book..."));
+                  return const Center(child: Text(Strings.searchHint));
                 } else if (state is BookLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return ListView.builder(
+                    itemCount: 8,
+                    itemBuilder: (context, index) => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child:  Card(
+                        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: ListTile(
+                          leading: Container(width: 50, height: 80, color: Colors.white),
+                          title: Container(height: 20, color: Colors.white),
+                          subtitle: Container(height: 14, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  );
                 } else if (state is BookLoaded) {
                   if (state.books.isEmpty) {
-                    return const Center(child: Text("No results found"));
+                    return const Center(child: Text(Strings.noResults));
                   }
                   return RefreshIndicator(
                     onRefresh: () async {
@@ -68,12 +83,22 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   );
                 } else {
-                  return const Center(child: Text("Something went wrong"));
+                  return const Center(child: Text(Strings.errorOccurred));
                 }
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+            context.read<BookBloc>().add(
+                  ClearBooks(),
+                );
+        },
+        backgroundColor: Colors.white,
+        highlightElevation: 20.0,
+        child: const Icon(Icons.delete),
       ),
     );
   }

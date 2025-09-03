@@ -15,3 +15,5 @@ class SaveBookEvent extends BookEvent {
 }
 
 class GetSavedBooks extends BookEvent {}
+
+class ClearBooks extends BookEvent {}

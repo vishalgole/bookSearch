@@ -7,6 +7,7 @@ import '../models/book_model.dart';
 abstract class BookLocalDataSource {
   Future<void> saveBook(BookModel book);
   Future<List<BookModel>> getSavedBooks();
+  Future<void> clearBooks();
 }
 
 class BookLocalDataSourceImpl implements BookLocalDataSource {
@@ -54,4 +55,10 @@ class BookLocalDataSourceImpl implements BookLocalDataSource {
     final maps = await db.query('books');
     return maps.map((map) => BookModel.fromMap(map)).toList();
   }
+
+  @override
+  Future<void> clearBooks() async {
+    final db = await database;
+    await db.delete('books');   
+}
 }

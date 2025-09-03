@@ -13,6 +13,8 @@ class BookLoaded extends BookState {
   
 }
 
+class BookCleared extends BookState {}
+
 class BookSaved extends BookState {}
 
 class BookError extends BookState {

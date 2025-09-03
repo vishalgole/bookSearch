@@ -1,8 +1,8 @@
 // lib/presentation/pages/details_page.dart
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/strings/strings.dart';
 import '../bloc/book_bloc.dart';
 import '../../data/models/book_model.dart';
 import '../bloc/book_event.dart';
@@ -51,7 +51,7 @@ class _DetailsPageState extends State<DetailsPage>
         listener: (context, state) {
           if (state is BookSaved) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Book saved successfully ✅')),
+              const SnackBar(content: Text(Strings.bookSavedSuccess)),
             );
           } else if (state is BookError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -91,7 +91,7 @@ class _DetailsPageState extends State<DetailsPage>
               ElevatedButton.icon(
                 onPressed: _saveBook,
                 icon: const Icon(Icons.bookmark_add),
-                label: const Text('Save Book'),
+                label: const Text(Strings.saveBookTitle),
                 style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
               ),
             ],

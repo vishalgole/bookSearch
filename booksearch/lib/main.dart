@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/strings/strings.dart';
 import 'service_locator.dart' as di;
 import 'presentation/bloc/book_bloc.dart';
 import 'presentation/pages/search_page.dart';
@@ -7,7 +8,7 @@ import 'presentation/pages/search_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-
+  
   runApp(const MyApp());
 }
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Book Finder',
+      debugShowCheckedModeBanner: false,
+      title: Strings.title,
       home: BlocProvider(
         create: (_) => di.sl<BookBloc>(),
         child: const SearchPage(),

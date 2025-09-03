@@ -42,4 +42,9 @@ class BookRepositoryImpl implements BookRepository {
   Future<List<BookModel>> getSavedBooks() async {
     return await localDataSource.getSavedBooks();
   }
+
+@override
+Future<void> clearBooks() async {
+  await localDataSource.clearBooks();
+}
 }

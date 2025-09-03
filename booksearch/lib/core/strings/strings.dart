@@ -12,6 +12,15 @@ class Strings {
   static const String searchURL = 'https://openlibrary.org/search.json';
   static const String baseURL = 'https://openlibrary.org';
   static const String unknown = 'Unknown';
+  static const String title = 'Book Finder';
+  static const String bookSavedSuccess = 'Book saved successfully ✅';
+  static const String saveBookTitle = 'Save Book';
+  static const String failedToFetchBooks = 'Failed to fetch books';
+  static const String failedToSaveBook = 'Failed to save book';
+  static const String failedToLoadSavedBooks = 'Failed to load saved books';
+  static const String noTitle = 'No Title';
+  static const String unknownAuthor = 'Unknown Author';
+  static const String failedToClearBooks = 'Failed to clear books';
 
   factory Strings() {
     return _instance;
