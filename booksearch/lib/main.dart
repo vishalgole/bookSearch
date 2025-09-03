@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'injection_container.dart' as di;
+import 'service_locator.dart' as di;
 import 'presentation/bloc/book_bloc.dart';
 import 'presentation/pages/search_page.dart';
 

@@ -1,3 +1,4 @@
+import 'package:booksearch/core/strings/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,8 +23,6 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     context.read<BookBloc>().add(GetSavedBooks());
-    // Optionally, load saved books on init
-    // context.read<BookBloc>().add(GetSavedBooks());
   }
 
   @override
@@ -82,45 +81,41 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildSearchBar(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: Row(
-      children: [
-        Expanded(
-          child: TextField(
-            controller: _controller,
-            decoration: InputDecoration(
-              hintText: "Search book by title",
-              border: const OutlineInputBorder(),
-              suffixIcon: _controller.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        _controller.clear();
-                        _page = 1;
-                        // Reload saved books after clearing search
-                        context.read<BookBloc>().add(GetSavedBooks());
-                        setState(() {}); // rebuild to hide suffixIcon
-                      },
-                    )
-                  : null,
+    child: ValueListenableBuilder(
+      valueListenable: _controller,
+      builder: (context, value, child) {
+        return TextField(
+          controller: _controller,
+          decoration: InputDecoration(
+            hintText: Strings.searchHint,
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
-            onChanged: (value) {
-              setState(() {}); // refresh suffixIcon visibility
-            },
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: _controller.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      _controller.clear();
+                      _page = 1;
+                      // Reload saved books after clearing search
+                      context.read<BookBloc>().add(GetSavedBooks());
+                    },
+                  )
+                : null,
+            
           ),
-        ),
-        const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () {
-            if (_controller.text.isNotEmpty) {
+          
+          onSubmitted: (value) {
+            if (value.isNotEmpty) {
               _page = 1;
               context.read<BookBloc>().add(
-                    SearchBooks(query: _controller.text, page: _page),
+                    SearchBooks(query: value, page: _page),
                   );
             }
           },
-          child: const Text("Search"),
-        ),
-      ],
+        );
+      }
     ),
   );
 }
