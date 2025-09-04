@@ -39,6 +39,9 @@ class _DetailsPageState extends State<DetailsPage>
   // In this file we are using SaveBookEvent (most common).
   void _saveBook() {
     context.read<BookBloc>().add(SaveBookEvent(widget.book));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text(Strings.bookSavedSuccess)),
+    );
   }
 
   @override

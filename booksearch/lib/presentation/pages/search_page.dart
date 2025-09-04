@@ -1,13 +1,18 @@
 import 'package:booksearch/core/strings/strings.dart';
+import 'package:booksearch/presentation/bloc/device_bloc.dart';
+import 'package:booksearch/presentation/pages/sensor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../service_locator.dart' as di;
 import '../bloc/book_bloc.dart';
 import '../../data/models/book_model.dart';
 import '../bloc/book_event.dart';
 import '../bloc/book_state.dart';
+import '../bloc/sensor_bloc.dart';
 import 'details_page.dart';
+import 'device_dashboard.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -30,7 +35,18 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text(Strings.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
+        title: const Text(Strings.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.push(context, 
+              MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => di.sl<DeviceBloc>(), child: const DeviceDashboard(),))), 
+            icon: const Icon(Icons.perm_device_info)
+          ),
+          IconButton(onPressed: () => Navigator.push(context, 
+            MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => di.sl<SensorBloc>(), child: const SensorPage(),))), 
+            icon: const Icon(Icons.sensor_window)
+          ),
+        ],
       ),
       body: Column(
         children: [

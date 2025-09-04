@@ -13,7 +13,7 @@ class Strings {
   static const String baseURL = 'https://openlibrary.org';
   static const String unknown = 'Unknown';
   static const String title = 'Book Finder';
-  static const String bookSavedSuccess = 'Book saved successfully ✅';
+  static const String bookSavedSuccess = 'Book saved successfully to library!';
   static const String saveBookTitle = 'Save Book';
   static const String failedToFetchBooks = 'Failed to fetch books';
   static const String failedToSaveBook = 'Failed to save book';
